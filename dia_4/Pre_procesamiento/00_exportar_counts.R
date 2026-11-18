@@ -9,7 +9,7 @@ library(tximport)
 
 # dropInfReps = TRUE: no lee los bootstraps del abundance.h5 (evita necesitar rhdf5)
 
-KALLISTO_DIR <- "kallisto_counts"
+KALLISTO_DIR <- "kallisto_conteos"
 METADATOS    <- "../metadata_peces.csv"
 OUT_DIR      <- "para_RStudio"
 
@@ -18,7 +18,9 @@ dir.create(OUT_DIR, showWarnings = FALSE)
 meta  <- read.csv(METADATOS)
 files <- file.path(KALLISTO_DIR, meta$sample_id, "abundance.tsv")
 names(files) <- meta$sample_id
-stopifnot(all(file.exists(files)))
+# Si falta algun archivo, dice cual (revisa KALLISTO_DIR y los sample_id)
+faltan <- files[!file.exists(files)]
+if (length(faltan) > 0) stop("No encuentro estos archivos:\n", paste(faltan, collapse = "\n"))
 
 # Para DESeq2: cuentas estimadas + longitudes de los transcritos
 txi <- tximport(files, type = "kallisto", txOut = TRUE, dropInfReps = TRUE)
