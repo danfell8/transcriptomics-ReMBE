@@ -23,7 +23,7 @@ conda activate /home/veronica/.conda/envs/rnaseq_env
 # Datos compartidos (solo lectura)
 
 REF_FASTA="/scratch/taller/datos_oyamel/REFERENCE/GCAT_AB-RNA-1.0.16.fa"
-TRIMMED_DIR="/scratch/taller/quality-assessment/results/trimmed"
+TRIMMED_DIR="/scratch/taller/TRIMMED"
 
 # Directorios de salida en la carpeta local 'outputs/' de cada usuari@
 
