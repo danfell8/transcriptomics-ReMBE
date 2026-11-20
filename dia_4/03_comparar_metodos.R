@@ -9,7 +9,8 @@ library(edgeR)
 library(DESeq2)
 
 setwd("~/para_RStudio")
-FDR <- 0.05
+FDR   <- 0.05
+NIVEL <- "transcritos"   # o "genes"
 
 # -------------------------
 # 1. Metadatos y cuentas
@@ -18,8 +19,8 @@ meta <- read.csv("metadata_peces.csv")
 rownames(meta) <- meta$sample_id
 meta$condition <- relevel(factor(meta$condition), ref = "control")
 
-txi_edger  <- readRDS("txi_edgeR.rds")
-txi_deseq2 <- readRDS("txi_deseq2.rds")
+txi_edger  <- readRDS(paste0("txi_", NIVEL, "_edgeR.rds"))
+txi_deseq2 <- readRDS(paste0("txi_", NIVEL, "_deseq2.rds"))
 
 meta <- meta[colnames(txi_edger$counts), ]
 stopifnot(identical(rownames(meta), colnames(txi_edger$counts)),
