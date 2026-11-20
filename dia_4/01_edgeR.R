@@ -2,7 +2,7 @@
 # 01_edgeR.R - Expresion diferencial con edgeR a partir de kallisto
 # Uso en RStudio: corre linea por linea (Ctrl+Enter) o por secciones.
 # Necesita: metadata_peces.csv (columnas sample_id, Sample, condition, ...)
-#           y txi_edgeR.rds (generado con 00_exportar_counts.R)
+#           y txi_<nivel>_edgeR.rds (generado con 00_exportar_counts.R)
 # =============================================================================
 
 library(edgeR)
@@ -14,7 +14,10 @@ library(pheatmap)
 # -------------------------
 setwd("~/para_RStudio")
 
-OUT_DIR    <- "resultados_edgeR"
+# Nivel del analisis: "transcritos" o "genes"
+NIVEL      <- "transcritos"
+
+OUT_DIR    <- paste0("resultados_edgeR_", NIVEL)
 REFERENCIA <- "control"     # Nivel de 'condition' contra el que se compara
 UMBRAL_FDR <- 0.05
 LFC        <- 1
@@ -29,7 +32,8 @@ meta <- read.csv("metadata_peces.csv")
 rownames(meta) <- meta$sample_id
 meta$condition <- relevel(factor(meta$condition), ref = REFERENCIA)
 
-txi <- readRDS("txi_edgeR.rds")
+txi <- readRDS(paste0("txi_", NIVEL, "_edgeR.rds"))
+dim(txi$counts)   # filas = transcritos o genes, columnas = muestras
 
 # MUY IMPORTANTE: los metadatos deben estar en el mismo orden que las columnas
 # de la matriz de cuentas. Si no, cada muestra queda con la etiqueta de otra.
