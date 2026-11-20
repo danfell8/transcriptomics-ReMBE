@@ -11,7 +11,7 @@ library(tximport)
 
 KALLISTO_DIR <- "kallisto_conteos"
 METADATOS    <- "../metadata_peces.csv"
-FASTA        <- "../transcriptoma/tsa.GKNI.1.fsa_nt.gz"   # el mismo que se uso para kallisto
+FASTA        <- "/scratch/taller/datos_pez/transcriptoma_completo/GKNI01.1.fsa_nt.gz"   # el mismo que se uso para kallisto
 OUT_DIR      <- "para_RStudio"
 
 dir.create(OUT_DIR, showWarnings = FALSE)
