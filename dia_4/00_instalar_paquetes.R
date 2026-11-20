@@ -5,7 +5,7 @@
 # =============================================================================
 
 paquetes_cran <- c("ggplot2", "pheatmap")
-paquetes_bioc <- c("tximport", "DESeq2", "apeglm")
+paquetes_bioc <- c("tximport","edgeR", "DESeq2", "apeglm")
 
 # BiocManager es el instalador de los paquetes de Bioconductor
 if (!requireNamespace("BiocManager", quietly = TRUE)) {
