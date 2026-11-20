@@ -2,7 +2,7 @@
 # 01_deseq2.R - Expresion diferencial con DESeq2 a partir de kallisto
 # Uso en RStudio: corre linea por linea (Ctrl+Enter) o por secciones.
 # Necesita: metadata_peces.csv (columnas sample_id, Sample, condition, ...)
-#           y txi_deseq2.rds (generado con 00_exportar_counts.R)
+#           y txi_<nivel>_deseq2.rds (generado con 00_exportar_counts.R)
 # =============================================================================
 
 library(DESeq2)
@@ -14,7 +14,10 @@ library(pheatmap)
 # -------------------------
 setwd("~/para_RStudio")
 
-OUT_DIR    <- "resultados_deseq2"
+# Nivel del analisis: "transcritos" o "genes"
+NIVEL      <- "transcritos"
+
+OUT_DIR    <- paste0("resultados_deseq2_", NIVEL)
 REFERENCIA <- "control"     # Nivel de 'condition' contra el que se compara
 PADJ       <- 0.05
 LFC        <- 1
@@ -29,7 +32,8 @@ meta <- read.csv("metadata_peces.csv")
 rownames(meta) <- meta$sample_id
 meta$condition <- relevel(factor(meta$condition), ref = REFERENCIA)
 
-txi <- readRDS("txi_deseq2.rds")
+txi <- readRDS(paste0("txi_", NIVEL, "_deseq2.rds"))
+dim(txi$counts)   # filas = transcritos o genes, columnas = muestras
 
 # MUY IMPORTANTE: metadatos en el mismo orden que las columnas de las cuentas
 meta <- meta[colnames(txi$counts), ]
